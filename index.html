@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click Game with Leaderboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        #game-container {
+            margin: 50px auto;
+            padding: 20px;
+            width: 300px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #click-button {
+            padding: 15px 30px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        #score {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+
+        #leaderboard {
+            margin-top: 30px;
+        }
+
+        .leaderboard-entry {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <h1>Click Game</h1>
+        <button id="click-button">Click me!</button>
+        <div id="score">Score: 0</div>
+
+        <div id="leaderboard">
+            <h2>Leaderboard</h2>
+            <div id="leaderboard-entries"></div>
+        </div>
+    </div>
+
+    <script>
+        // 게임 변수
+        let score = 0;
+        const leaderboard = [];
+
+        // HTML 요소
+        const scoreDisplay = document.getElementById('score');
+        const leaderboardEntries = document.getElementById('leaderboard-entries');
+        const clickButton = document.getElementById('click-button');
+
+        // 클릭 시 점수 증가
+        clickButton.addEventListener('click', () => {
+            score++;
+            scoreDisplay.textContent = `Score: ${score}`;
+        });
+
+        // 리더보드에 점수 추가하는 함수
+        function addToLeaderboard(player, score) {
+            leaderboard.push({ player, score });
+            leaderboard.sort((a, b) => b.score - a.score); // 점수 순으로 정렬
+            updateLeaderboard();
+        }
+
+        // 리더보드를 업데이트하는 함수
+        function updateLeaderboard() {
+            leaderboardEntries.innerHTML = '';
+            leaderboard.forEach((entry, index) => {
+                const div = document.createElement('div');
+                div.classList.add('leaderboard-entry');
+                div.textContent = `${index + 1}. ${entry.player}: ${entry.score}`;
+                leaderboardEntries.appendChild(div);
+            });
+        }
+
+        // 예시로 점수 추가 (임시)
+        addToLeaderboard("Player1", 10);
+        addToLeaderboard("Player2", 8);
+        addToLeaderboard("Player3", 15);
+    </script>
+</body>
+</html>
